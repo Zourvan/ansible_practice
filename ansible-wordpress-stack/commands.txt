@@ -1,0 +1,27 @@
+# دستورات لازم (از پوشه پروژه بزن)
+
+# نصب
+sudo apt update
+sudo apt install -y ansible
+ansible-galaxy collection install -r requirements.yml
+
+# کلید ssh
+ssh-keygen -t ed25519
+ssh-copy-id ubuntu@192.168.56.101
+ssh-copy-id ubuntu@192.168.56.102
+
+# تست
+ansible all -m ping
+
+# vault
+cp inventory/group_vars/vault.yml.example inventory/group_vars/vault.yml
+ansible-vault encrypt inventory/group_vars/vault.yml
+
+# ران کردن
+ansible-playbook playbooks/site.yml --ask-vault-pass
+
+# چک سرویس ها
+ansible webservers -a "systemctl status nginx --no-pager"
+ansible webservers -a "systemctl status php8.3-fpm --no-pager"
+ansible dbservers -a "systemctl status mysql --no-pager"
+curl http://192.168.56.101

@@ -1,0 +1,21 @@
+---
+# php و چیزایی که wordpress لازم داره
+- name: install php
+  apt:
+    name:
+      - php
+      - php-fpm
+      - php-mysql
+      - php-curl
+      - php-gd
+      - php-mbstring
+      - php-xml
+      - php-zip
+    state: present
+    update_cache: yes
+
+- name: start php-fpm
+  service:
+    name: "{{ php_fpm_service }}"
+    state: started
+    enabled: yes

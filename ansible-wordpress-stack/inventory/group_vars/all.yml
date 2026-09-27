@@ -1,0 +1,10 @@
+---
+# اینا بین web و db مشترکه
+webserver_ip: "192.168.56.101"
+wordpress_db_host: "192.168.56.102"
+
+wordpress_db_name: "wordpress"
+wordpress_db_user: "wordpress"
+
+# پسورد از vault میاد
+wordpress_db_password: "{{ vault_wordpress_db_password }}"

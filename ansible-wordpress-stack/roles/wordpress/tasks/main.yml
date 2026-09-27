@@ -1,0 +1,39 @@
+---
+- name: make wordpress dir
+  file:
+    path: "{{ wordpress_install_dir }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+
+- name: download wordpress
+  get_url:
+    url: "{{ wordpress_download_url }}"
+    dest: "/tmp/wordpress-{{ wordpress_version }}.tar.gz"
+
+- name: extract wordpress
+  unarchive:
+    src: "/tmp/wordpress-{{ wordpress_version }}.tar.gz"
+    dest: /var/www
+    remote_src: yes
+    owner: www-data
+    group: www-data
+    creates: "{{ wordpress_install_dir }}/wp-settings.php"
+
+- name: fix permission
+  file:
+    path: "{{ wordpress_install_dir }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+# کانفیگ دیتابیس
+- name: copy wp-config
+  template:
+    src: wp-config.php.j2
+    dest: "{{ wordpress_install_dir }}/wp-config.php"
+    owner: www-data
+    group: www-data
+    mode: "0640"

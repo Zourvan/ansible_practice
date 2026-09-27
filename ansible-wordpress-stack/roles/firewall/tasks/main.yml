@@ -1,0 +1,40 @@
+---
+- name: install ufw
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: allow ssh
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+# فقط روی وب سرور
+- name: allow http
+  ufw:
+    rule: allow
+    port: "80"
+    proto: tcp
+  when: "'webservers' in group_names"
+
+- name: allow https
+  ufw:
+    rule: allow
+    port: "443"
+    proto: tcp
+  when: "'webservers' in group_names"
+
+# فقط از وب سرور به mysql
+- name: allow mysql from web
+  ufw:
+    rule: allow
+    port: "3306"
+    proto: tcp
+    from_ip: "{{ mysql_allowed_from | default(webserver_ip) }}"
+  when: "'dbservers' in group_names"
+
+- name: enable ufw
+  ufw:
+    state: enabled
+    policy: deny

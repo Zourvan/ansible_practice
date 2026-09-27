@@ -1,0 +1,22 @@
+---
+- name: common for all
+  hosts: all
+  become: true
+  roles:
+    - common
+
+- name: setup db
+  hosts: dbservers
+  become: true
+  roles:
+    - mysql
+    - firewall
+
+- name: setup web
+  hosts: webservers
+  become: true
+  roles:
+    - php
+    - nginx
+    - wordpress
+    - firewall

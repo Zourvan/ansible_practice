@@ -1,0 +1,6 @@
+---
+wordpress_install_dir: "/var/www/wordpress"
+wordpress_version: "6.7.2"
+wordpress_download_url: "https://wordpress.org/wordpress-{{ wordpress_version }}.tar.gz"
+wordpress_owner: www-data
+wordpress_group: www-data

@@ -1,0 +1,9 @@
+---
+wordpress_domain: "wordpress.local"
+wordpress_install_dir: "/var/www/wordpress"
+wordpress_version: "6.7.2"
+wordpress_download_url: "https://wordpress.org/wordpress-{{ wordpress_version }}.tar.gz"
+
+# اگه ubuntu 22.04 هست بکن php8.1
+php_fpm_service: "php8.3-fpm"
+php_fpm_socket: "/run/php/php8.3-fpm.sock"

@@ -1,0 +1,10 @@
+---
+- name: setup web server
+  hosts: webservers
+  become: true
+  roles:
+    - common
+    - php
+    - nginx
+    - wordpress
+    - firewall

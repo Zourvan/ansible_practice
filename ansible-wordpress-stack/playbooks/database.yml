@@ -1,0 +1,8 @@
+---
+- name: setup database
+  hosts: dbservers
+  become: true
+  roles:
+    - common
+    - mysql
+    - firewall

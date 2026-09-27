@@ -1,0 +1,8 @@
+*.retry
+inventory/group_vars/vault.yml
+.vault_pass
+*.pem
+.idea/
+.vscode/
+*.swp
+.DS_Store

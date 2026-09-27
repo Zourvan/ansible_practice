@@ -1,0 +1,40 @@
+---
+- name: install mysql
+  apt:
+    name:
+      - mysql-server
+      - python3-pymysql
+    state: present
+    update_cache: yes
+
+- name: start mysql
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+# تا از بیرون بتونه وصل بشه
+- name: set bind address
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: "^bind-address"
+    line: "bind-address = {{ mysql_bind_address }}"
+  notify: restart mysql
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: create db
+  community.mysql.mysql_db:
+    name: "{{ wordpress_db_name }}"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: create db user
+  community.mysql.mysql_user:
+    name: "{{ wordpress_db_user }}"
+    password: "{{ wordpress_db_password }}"
+    host: "{{ mysql_allowed_from | default(webserver_ip) }}"
+    priv: "{{ wordpress_db_name }}.*:ALL"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock

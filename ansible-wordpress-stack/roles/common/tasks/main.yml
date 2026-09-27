@@ -1,0 +1,11 @@
+---
+# پکیج های عمومی
+- name: install basic packages
+  apt:
+    name:
+      - curl
+      - wget
+      - unzip
+      - ca-certificates
+    state: present
+    update_cache: yes
